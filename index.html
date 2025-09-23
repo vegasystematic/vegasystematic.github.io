@@ -101,20 +101,24 @@
       animation: glow 4s ease-in-out infinite alternate;
       line-height: 1.2;
       min-height: 1.2em; /* Prevents layout shift */
+      position: relative;
     }
-    /* Typing cursor effect */
-    .typing-cursor::after {
-      content: '|';
+    
+    /* Typing cursor */
+    .cursor {
       display: inline-block;
       background: linear-gradient(135deg, var(--primary), var(--secondary), var(--accent));
       -webkit-background-clip: text; 
       -webkit-text-fill-color: transparent;
       animation: blink 1s infinite;
+      font-weight: 100;
     }
+    
     @keyframes blink {
-      0%, 50% { opacity: 1; }
-      51%, 100% { opacity: 0; }
+      0%, 49% { opacity: 1; }
+      50%, 100% { opacity: 0; }
     }
+    
     @keyframes glow {
       0% { filter: drop-shadow(0 0 20px rgba(0,212,255,0.5)); }
       50% { filter: drop-shadow(0 0 30px rgba(255,0,255,0.5)); }
@@ -342,7 +346,7 @@
   
   <!-- Hero -->
   <section class="hero" id="home">
-    <h1 id="typing-text" class="typing-cursor"></h1>
+    <h1><span id="typing-text"></span><span class="cursor">|</span></h1>
     <p>We architect sophisticated trading systems and crypto-native analytics software using cutting-edge optimization theory, machine learning, and statistical modeling.</p>
     <a href="#contact" class="cta">Start a Conversation</a>
   </section>
@@ -433,13 +437,12 @@
       
       if (isDeleting) {
         // Remove characters
-        typingElement.textContent = currentPhrase.substring(0, charIndex - 1);
+        typingElement.textContent = currentPhrase.substring(0, charIndex);
         charIndex--;
         typingSpeed = 50; // Faster when deleting
       } else {
         // Add characters
-        typingElement.textContent = currentPhrase.substring(0, charIndex +
-        typingElement.textContent = currentPhrase.substring(0, charIndex + 1);
+        typingElement.textContent = currentPhrase.substring(0, charIndex);
         charIndex++;
         typingSpeed = 100; // Normal speed when typing
       }
@@ -459,8 +462,10 @@
       setTimeout(typeEffect, typingSpeed);
     }
     
-    // Start typing effect
-    typeEffect();
+    // Start typing effect when page loads
+    window.addEventListener('load', () => {
+      setTimeout(typeEffect, 1000); // Start after 1 second
+    });
   </script>
   
   <!-- Complete Dynamic Background Animation Script -->
@@ -572,7 +577,7 @@
         this.vy = (Math.random() - 0.5) * 0.3;
         this.radius = Math.random() * 2 + 0.5;
         this.opacity = Math.random() * 0.4 + 0.1;
-        // Random color for particles too
+        // Random color for particles
         const colors = ['#00d4ff', '#ff00ff', '#00ff88'];
         this.color = colors[Math.floor(Math.random() * colors.length)];
       }
@@ -589,7 +594,6 @@
       draw() {
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        ctx.fillStyle = this.color.replace(')', `, ${this.opacity})`).replace('rgb', 'rgba');
         ctx.globalAlpha = this.opacity;
         ctx.fillStyle = this.color;
         ctx.fill();
