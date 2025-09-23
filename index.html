@@ -3,19 +3,19 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>vega systematic • Advanced Mathematical Research for a Decentralized Future</title>
+  <title>vega systematic • Optimize Everything</title>
   <!-- Orbitron for a futuristic feel -->
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet"/>
   <style>
     :root {
-      --bg-dark: #0a0e1a;
-      --bg-gradient: #0d1929;
-      --primary-blue: #00a6fb;
-      --light-blue: #5eb3f6;
-      --dark-blue: #003d6b;
-      --accent-blue: #7dd3fc;
-      --text-light: #e8f4f8;
-      --text-dim: #a8c5d6;
+      --bg-dark: #0f1419;
+      --bg-gradient: #1a2332;
+      --primary-blue: #3b9eff;
+      --light-blue: #7ec8ff;
+      --bright-blue: #a8d8ff;
+      --accent-blue: #c3e4ff;
+      --text-light: #f0f6fc;
+      --text-dim: #b8d4e8;
       --font: 'Orbitron', sans-serif;
       --header-height: 64px;
     }
@@ -40,7 +40,7 @@
       width: 100%;
       height: 100%;
       z-index: -1;
-      background: linear-gradient(180deg, #0a0e1a 0%, #0d1929 50%, #001a33 100%);
+      background: linear-gradient(180deg, #0f1419 0%, #1a2332 50%, #1e3a5f 100%);
     }
     
     /* Header/Nav */
@@ -48,16 +48,16 @@
       position: fixed; top:0; left:0; width:100%; height: var(--header-height);
       display:flex; justify-content: space-between; align-items:center;
       padding: 0 2rem;
-      background: rgba(10,14,26,0.8);
+      background: rgba(15,20,25,0.85);
       backdrop-filter: blur(10px);
-      border-bottom: 1px solid rgba(0,166,251,0.1);
+      border-bottom: 1px solid rgba(59,158,255,0.15);
       z-index: 10;
     }
     .logo { 
       font-size:1.5rem; 
       font-weight:700; 
       color: var(--primary-blue);
-      text-shadow: 0 0 20px rgba(0,166,251,0.5);
+      text-shadow: 0 0 25px rgba(59,158,255,0.6);
     }
     nav {
       position: relative;
@@ -67,11 +67,11 @@
       list-style:none; display:flex; gap:2rem;
     }
     nav li { cursor:pointer; transition: color .3s; }
-    nav li:hover { color: var(--accent-blue); }
+    nav li:hover { color: var(--light-blue); }
     /* mobile select dropdown (hidden by default) */
     .mobile-nav {
       display: none;
-      background: rgba(0,166,251,0.1);
+      background: rgba(59,158,255,0.1);
       color: var(--text-light);
       border: 1px solid var(--primary-blue);
       padding: 0.5rem;
@@ -87,18 +87,19 @@
       position: relative;
     }
     .hero h1 {
-      font-size:3.5rem; margin-bottom:1rem;
-      background: linear-gradient(90deg, var(--primary-blue), var(--accent-blue));
+      font-size:3rem; margin-bottom:1rem;
+      background: linear-gradient(90deg, var(--primary-blue), var(--light-blue), var(--accent-blue));
       -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      animation: glow 3s ease-in-out infinite alternate;
+      animation: glow 4s ease-in-out infinite alternate;
+      line-height: 1.2;
     }
     @keyframes glow {
-      from { filter: drop-shadow(0 0 20px rgba(0,166,251,0.4)); }
-      to { filter: drop-shadow(0 0 30px rgba(125,211,252,0.6)); }
+      from { filter: drop-shadow(0 0 25px rgba(59,158,255,0.5)); }
+      to { filter: drop-shadow(0 0 35px rgba(126,200,255,0.7)); }
     }
     .hero p { 
       font-size:1.2rem; 
-      max-width:700px; 
+      max-width:800px; 
       margin-bottom:2rem;
       color: var(--text-dim);
     }
@@ -107,12 +108,13 @@
       border:2px solid var(--primary-blue);
       border-radius:40px; 
       transition: all .3s;
-      background: rgba(0,166,251,0.1);
+      background: rgba(59,158,255,0.1);
     }
     .cta:hover {
       background: var(--primary-blue); 
       color: var(--bg-dark);
-      box-shadow: 0 0 30px rgba(0,166,251,0.5);
+      box-shadow: 0 0 35px rgba(59,158,255,0.6);
+      transform: translateY(-2px);
     }
     /* Sections */
     section {
@@ -132,8 +134,8 @@
       margin-top:2rem;
     }
     .card {
-      background: rgba(0,166,251,0.05); 
-      border: 1px solid rgba(0,166,251,0.2);
+      background: rgba(59,158,255,0.06); 
+      border: 1px solid rgba(59,158,255,0.25);
       border-radius:12px;
       padding:2.5rem; 
       transition: all .3s;
@@ -141,18 +143,18 @@
     }
     .card:hover {
       transform: translateY(-8px);
-      box-shadow: 0 10px 30px rgba(0,166,251,0.2);
+      box-shadow: 0 15px 40px rgba(59,158,255,0.25);
       border-color: var(--primary-blue);
-      background: rgba(0,166,251,0.08);
+      background: rgba(59,158,255,0.1);
     }
     .card h3 { 
       margin-bottom:1rem; 
-      color: var(--accent-blue);
+      color: var(--light-blue);
       font-size: 1.3rem;
     }
     .card p { 
       font-size:0.95rem; 
-      line-height: 1.6;
+      line-height: 1.7;
       color: var(--text-dim);
     }
     /* Contact Form */
@@ -160,8 +162,8 @@
       max-width: 600px;
       margin: 2rem auto;
       padding: 2rem;
-      background: rgba(0,166,251,0.05);
-      border: 1px solid rgba(0,166,251,0.2);
+      background: rgba(59,158,255,0.06);
+      border: 1px solid rgba(59,158,255,0.25);
       border-radius: 12px;
       backdrop-filter: blur(5px);
     }
@@ -171,15 +173,15 @@
     .form-group label {
       display: block;
       margin-bottom: 0.5rem;
-      color: var(--accent-blue);
+      color: var(--light-blue);
       font-size: 0.9rem;
     }
     .form-group input,
     .form-group textarea {
       width: 100%;
       padding: 0.8rem;
-      background: rgba(0,166,251,0.05);
-      border: 1px solid rgba(0,166,251,0.3);
+      background: rgba(59,158,255,0.05);
+      border: 1px solid rgba(59,158,255,0.3);
       border-radius: 6px;
       color: var(--text-light);
       font-family: var(--font);
@@ -190,8 +192,8 @@
     .form-group textarea:focus {
       outline: none;
       border-color: var(--primary-blue);
-      background: rgba(0,166,251,0.08);
-      box-shadow: 0 0 10px rgba(0,166,251,0.2);
+      background: rgba(59,158,255,0.08);
+      box-shadow: 0 0 15px rgba(59,158,255,0.3);
     }
     .form-group textarea {
       min-height: 120px;
@@ -200,7 +202,7 @@
     .submit-btn {
       width: 100%;
       padding: 1rem;
-      background: rgba(0,166,251,0.1);
+      background: rgba(59,158,255,0.1);
       border: 2px solid var(--primary-blue);
       border-radius: 40px;
       color: var(--primary-blue);
@@ -213,25 +215,26 @@
     .submit-btn:hover {
       background: var(--primary-blue);
       color: var(--bg-dark);
-      box-shadow: 0 0 30px rgba(0,166,251,0.5);
+      box-shadow: 0 0 35px rgba(59,158,255,0.6);
+      transform: translateY(-2px);
     }
     /* Footer */
     footer {
       text-align:center; padding:2rem 1rem;
-      background: rgba(10,14,26,0.9);
+      background: rgba(15,20,25,0.9);
       font-size:0.9rem;
-      border-top: 1px solid rgba(0,166,251,0.1);
+      border-top: 1px solid rgba(59,158,255,0.15);
       color: var(--text-dim);
     }
     /* Responsive */
     @media(max-width:768px) {
-      .hero h1 { font-size:2.5rem; }
+      .hero h1 { font-size:2.2rem; }
       .cards { grid-template-columns: 1fr; }
     }
     @media(max-width:600px) {
       nav ul { display: none; }
       .mobile-nav { display: block; }
-      .hero h1 { font-size:2rem; }
+      .hero h1 { font-size:1.8rem; }
     }
   </style>
 </head>
@@ -263,38 +266,38 @@
   
   <!-- Hero -->
   <section class="hero" id="home">
-    <h1>Advanced Mathematical Research for a Decentralized Future</h1>
-    <p>vega systematic specializes in white-label software solutions and proprietary trading strategies, leveraging advanced optimization, machine learning, and statistical models for decentralized finance and trading infrastructure.</p>
-    <a href="#contact" class="cta">Get in Touch</a>
+    <h1>Pure Mathematics. Applied Alpha.</h1>
+    <p>We architect sophisticated trading systems and DeFi protocols using cutting-edge optimization theory, machine learning, and statistical modeling.</p>
+    <a href="#contact" class="cta">Start a Conversation</a>
   </section>
   
   <!-- About -->
   <section id="about">
-    <h2>About vega systematic</h2>
-    <p>vega systematic is a quantitative technology firm specializing in two core areas: developing white-label software solutions for institutional clients and executing proprietary trading strategies. Our team of PhD researchers and engineers leverage advanced mathematical optimization and robust control theory to build production-ready systems for DeFi protocols and trading infrastructure. We transform complex mathematical frameworks into practical solutions that deliver measurable alpha and operational efficiency in crypto markets.</p>
+    <h2>Who We Are</h2>
+    <p>vega systematic is a quantitative research firm at the intersection of mathematical optimization and blockchain technology. Our team of researchers and engineers—with backgrounds from leading academic institutions and trading firms—develops institutional-grade infrastructure for the evolving digital asset ecosystem.</p>
   </section>
   
   <!-- Services -->
   <section id="services">
-    <h2>Our Services</h2>
+    <h2>What We Do</h2>
     <div class="cards">
       <div class="card">
-        <h3>White-Label Software Solutions</h3>
-        <p>We develop custom DeFi protocols and trading infrastructure for institutional clients. Our solutions include automated market makers, lending protocols, execution algorithms, and risk management systems—all built on rigorous mathematical foundations with production-grade reliability.</p>
-        <p style="margin-top: 1rem;">Our white-label products feature advanced optimization engines, robust control mechanisms, and seamless integration with existing systems, delivering institutional-grade performance with mathematical guarantees. In the future, we plant to also build analytics platforms for retail traders.</p>
+        <h3>Institutional Infrastructure</h3>
+        <p>We architect bespoke trading systems and DeFi protocols for institutional clients. From high-performance market making engines to sophisticated lending protocols, our solutions are built on proven mathematical foundations with enterprise-grade reliability.</p>
+        <p style="margin-top: 1rem;">Our infrastructure combines advanced optimization algorithms, real-time risk management, and seamless integration capabilities—delivering the performance and robustness that institutions demand. Future developments include comprehensive analytics platforms designed for professional traders.</p>
       </div>
       <div class="card">
-        <h3>Proprietary Trading</h3>
-        <p>We deploy capital using research-driven proprietary trading strategies across centralized and decentralized venues. Our trading systems leverage advanced mathematical models to identify and capture alpha in volatile crypto markets.</p>
-        <p style="margin-top: 1rem;">Our focus includes cross-venue arbitrage, optimal execution, dynamic hedging, and liquidity provision—all powered by robust optimization and machine learning frameworks that adapt to changing market conditions.</p>
+        <h3>Systematic Trading</h3>
+        <p>We deploy proprietary capital through systematic strategies that exploit market inefficiencies across digital asset venues. Our approach combines mathematical rigor with adaptive algorithms to generate consistent returns in dynamic markets.</p>
+        <p style="margin-top: 1rem;">Our strategies span statistical arbitrage, market microstructure optimization, and liquidity provision—all driven by machine learning models and robust control systems that continuously adapt to evolving market dynamics.</p>
       </div>
     </div>
   </section>
   
   <!-- Contact -->
   <section id="contact">
-    <h2>Contact Us</h2>
-    <p style="text-align: center; margin-bottom: 2rem;">Interested in our white-label solutions or partnership opportunities? Send us an enquiry below.</p>
+    <h2>Work With Us</h2>
+    <p style="text-align: center; margin-bottom: 2rem;">Whether you're looking for institutional-grade infrastructure or exploring partnership opportunities, we'd like to hear from you.</p>
     
     <div class="contact-form">
       <form action="https://formsubmit.co/vegasystematic@gmail.com" method="POST">
@@ -314,23 +317,23 @@
         </div>
         
         <div class="form-group">
-          <label for="company">Company (Optional)</label>
+          <label for="company">Organization (Optional)</label>
           <input type="text" id="company" name="company">
         </div>
         
         <div class="form-group">
           <label for="message">Message</label>
-          <textarea id="message" name="message" required placeholder="Tell us about your project or requirements..."></textarea>
+          <textarea id="message" name="message" required placeholder="Tell us about your project or how we might collaborate..."></textarea>
         </div>
         
-        <button type="submit" class="submit-btn">Send Enquiry</button>
+        <button type="submit" class="submit-btn">Send Message</button>
       </form>
     </div>
   </section>
   
   <!-- Footer -->
   <footer>
-    &copy; 2025 vega systematic • Optimization for the Decentralized Future
+    &copy; 2025 vega systematic • Building the Future of Digital Asset Markets
   </footer>
   
   <!-- Complete Dynamic Background Animation Script -->
@@ -360,20 +363,19 @@
         this.speedY = (Math.random() - 0.5) * 0.5;
         this.rotation = Math.random() * Math.PI * 2;
         this.rotationSpeed = (Math.random() - 0.5) * 0.02;
-        this.type = Math.floor(Math.random() * 4); // 0: hexagon, 1: triangle, 2: square, 3: circle
-        this.opacity = Math.random() * 0.3 + 0.1;
+        this.type = Math.floor(Math.random() * 4);
+        this.opacity = Math.random() * 0.25 + 0.05;
         this.pulsePhase = Math.random() * Math.PI * 2;
-        this.color = ['#00a6fb', '#5eb3f6', '#7dd3fc'][Math.floor(Math.random() * 3)];
+        // Lighter blue palette
+        this.color = ['#3b9eff', '#7ec8ff', '#a8d8ff', '#c3e4ff'][Math.floor(Math.random() * 4)];
       }
       
       update() {
-        // Move shape
         this.x += this.speedX;
         this.y += this.speedY;
         this.rotation += this.rotationSpeed;
         this.pulsePhase += 0.02;
         
-        // Wrap around screen edges
         if (this.x < -this.size) this.x = canvas.width + this.size;
         if (this.x > canvas.width + this.size) this.x = -this.size;
         if (this.y < -this.size) this.y = canvas.height + this.size;
@@ -385,13 +387,12 @@
         ctx.translate(this.x, this.y);
         ctx.rotate(this.rotation);
         
-        // Pulsing effect
         const scale = 1 + Math.sin(this.pulsePhase) * 0.1;
         ctx.scale(scale, scale);
         
         ctx.globalAlpha = this.opacity;
         ctx.strokeStyle = this.color;
-        ctx.lineWidth = 2;
+        ctx.lineWidth = 1.5;
         
         switch(this.type) {
           case 0: // Hexagon
@@ -443,7 +444,7 @@
         this.vx = (Math.random() - 0.5) * 0.3;
         this.vy = (Math.random() - 0.5) * 0.3;
         this.radius = Math.random() * 2 + 0.5;
-        this.opacity = Math.random() * 0.5 + 0.2;
+        this.opacity = Math.random() * 0.4 + 0.1;
       }
       
       update() {
@@ -458,7 +459,7 @@
       draw() {
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(125, 211, 252, ${this.opacity})`;
+        ctx.fillStyle = `rgba(168, 216, 255, ${this.opacity})`;
         ctx.fill();
       }
     }
@@ -467,13 +468,13 @@
     const shapes = [];
     const particles = [];
     
-    // Create 8-12 floating shapes
-    for (let i = 0; i < 10; i++) {
+    // Create 8-10 floating shapes
+    for (let i = 0; i < 8; i++) {
       shapes.push(new FloatingShape());
     }
     
-    // Create 30 particles
-    for (let i = 0; i < 30; i++) {
+    // Create 25 particles
+    for (let i = 0; i < 25; i++) {
       particles.push(new Particle());
     }
     
@@ -491,7 +492,7 @@
             ctx.beginPath();
             ctx.moveTo(particles[i].x, particles[i].y);
             ctx.lineTo(particles[j].x, particles[j].y);
-            ctx.strokeStyle = `rgba(94, 179, 246, ${0.1 * (1 - distance / maxDistance)})`;
+            ctx.strokeStyle = `rgba(126, 200, 255, ${0.08 * (1 - distance / maxDistance)})`;
             ctx.lineWidth = 0.5;
             ctx.stroke();
           }
@@ -502,14 +503,14 @@
     // Animation loop
     function animate() {
       // Clear canvas with gradient background
-      ctx.fillStyle = '#0a0e1a';
+      ctx.fillStyle = '#0f1419';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
       
       // Create gradient overlay
       const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
-      gradient.addColorStop(0, 'rgba(10, 14, 26, 0)');
-      gradient.addColorStop(0.5, 'rgba(13, 25, 41, 0.3)');
-      gradient.addColorStop(1, 'rgba(0, 26, 51, 0.5)');
+      gradient.addColorStop(0, 'rgba(15, 20, 25, 0)');
+      gradient.addColorStop(0.5, 'rgba(26, 35, 50, 0.3)');
+      gradient.addColorStop(1, 'rgba(30, 58, 95, 0.4)');
       ctx.fillStyle = gradient;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
       
@@ -533,8 +534,8 @@
         canvas.width / 2, canvas.height / 2, 0,
         canvas.width / 2, canvas.height / 2, canvas.width / 2
       );
-      centerGradient.addColorStop(0, 'rgba(0, 166, 251, 0.02)');
-      centerGradient.addColorStop(1, 'rgba(0, 166, 251, 0)');
+      centerGradient.addColorStop(0, 'rgba(59, 158, 255, 0.03)');
+      centerGradient.addColorStop(1, 'rgba(59, 158, 255, 0)');
       ctx.fillStyle = centerGradient;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
       
