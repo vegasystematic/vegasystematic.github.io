@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>vega systematic • Advanced Optimization for DeFi</title>
+  <!-- Orbitron for a futuristic feel -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg-dark: #0a0e1a;
+      --bg-gradient: #0d1929;
+      --primary-blue: #00a6fb;
+      --light-blue: #5eb3f6;
+      --dark-blue: #003d6b;
+      --accent-blue: #7dd3fc;
+      --text-light: #e8f4f8;
+      --text-dim: #a8c5d6;
+      --font: 'Orbitron', sans-serif;
+      --header-height: 64px;
+    }
+    /* Reset & Base */
+    * { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font);
+      color: var(--text-light);
+      background: var(--bg-dark);
+      overflow-x: hidden;
+      line-height: 1.5;
+    }
+    a { color: var(--primary-blue); text-decoration: none; }
+    section { scroll-margin-top: var(--header-height); }
+    
+    /* Dynamic Background Canvas */
+    #bg-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background: linear-gradient(180deg, #0a0e1a 0%, #0d1929 50%, #001a33 100%);
+    }
+    
+    /* Header/Nav */
+    header {
+      position: fixed; top:0; left:0; width:100%; height: var(--header-height);
+      display:flex; justify-content: space-between; align-items:center;
+      padding: 0 2rem;
+      background: rgba(10,14,26,0.8);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(0,166,251,0.1);
+      z-index: 10;
+    }
+    .logo { 
+      font-size:1.5rem; 
+      font-weight:700; 
+      color: var(--primary-blue);
+      text-shadow: 0 0 20px rgba(0,166,251,0.5);
+    }
+    nav {
+      position: relative;
+    }
+    /* desktop links */
+    nav ul {
+      list-style:none; display:flex; gap:2rem;
+    }
+    nav li { cursor:pointer; transition: color .3s; }
+    nav li:hover { color: var(--accent-blue); }
+    /* mobile select dropdown (hidden by default) */
+    .mobile-nav {
+      display: none;
+      background: rgba(0,166,251,0.1);
+      color: var(--text-light);
+      border: 1px solid var(--primary-blue);
+      padding: 0.5rem;
+      border-radius: 6px;
+      font-family: var(--font);
+      font-size: 1rem;
+    }
+    /* Hero */
+    .hero {
+      height:100vh; padding:0 1rem;
+      display:flex; flex-direction:column; justify-content:center; align-items:center;
+      text-align:center;
+      position: relative;
+    }
+    .hero h1 {
+      font-size:3.5rem; margin-bottom:1rem;
+      background: linear-gradient(90deg, var(--primary-blue), var(--accent-blue));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      animation: glow 3s ease-in-out infinite alternate;
+    }
+    @keyframes glow {
+      from { filter: drop-shadow(0 0 20px rgba(0,166,251,0.4)); }
+      to { filter: drop-shadow(0 0 30px rgba(125,211,252,0.6)); }
+    }
+    .hero p { 
+      font-size:1.2rem; 
+      max-width:700px; 
+      margin-bottom:2rem;
+      color: var(--text-dim);
+    }
+    .cta {
+      padding:0.8rem 2rem; 
+      border:2px solid var(--primary-blue);
+      border-radius:40px; 
+      transition: all .3s;
+      background: rgba(0,166,251,0.1);
+    }
+    .cta:hover {
+      background: var(--primary-blue); 
+      color: var(--bg-dark);
+      box-shadow: 0 0 30px rgba(0,166,251,0.5);
+    }
+    /* Sections */
+    section {
+      padding:5rem 2rem; max-width:1200px; margin:0 auto;
+    }
+    section h2 {
+      font-size:2.5rem; margin-bottom:1rem; position:relative;
+      color: var(--light-blue);
+    }
+    section h2::after {
+      content:''; position:absolute; bottom:-8px; left:0;
+      width:60px; height:4px; background:var(--primary-blue);
+    }
+    .cards {
+      display:grid; gap:2rem;
+      grid-template-columns: repeat(auto-fit, minmax(350px,1fr));
+      margin-top:2rem;
+    }
+    .card {
+      background: rgba(0,166,251,0.05); 
+      border: 1px solid rgba(0,166,251,0.2);
+      border-radius:12px;
+      padding:2.5rem; 
+      transition: all .3s;
+      backdrop-filter: blur(5px);
+    }
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 10px 30px rgba(0,166,251,0.2);
+      border-color: var(--primary-blue);
+      background: rgba(0,166,251,0.08);
+    }
+    .card h3 { 
+      margin-bottom:1rem; 
+      color: var(--accent-blue);
+      font-size: 1.3rem;
+    }
+    .card p { 
+      font-size:0.95rem; 
+      line-height: 1.6;
+      color: var(--text-dim);
+    }
+    /* Contact Form */
+    .contact-form {
+      max-width: 600px;
+      margin: 2rem auto;
+      padding: 2rem;
+      background: rgba(0,166,251,0.05);
+      border: 1px solid rgba(0,166,251,0.2);
+      border-radius: 12px;
+      backdrop-filter: blur(5px);
+    }
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: var(--accent-blue);
+      font-size: 0.9rem;
+    }
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 0.8rem;
+      background: rgba(0,166,251,0.05);
+      border: 1px solid rgba(0,166,251,0.3);
+      border-radius: 6px;
+      color: var(--text-light);
+      font-family: var(--font);
+      font-size: 0.9rem;
+      transition: all 0.3s;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--primary-blue);
+      background: rgba(0,166,251,0.08);
+      box-shadow: 0 0 10px rgba(0,166,251,0.2);
+    }
+    .form-group textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+    .submit-btn {
+      width: 100%;
+      padding: 1rem;
+      background: rgba(0,166,251,0.1);
+      border: 2px solid var(--primary-blue);
+      border-radius: 40px;
+      color: var(--primary-blue);
+      font-family: var(--font);
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .submit-btn:hover {
+      background: var(--primary-blue);
+      color: var(--bg-dark);
+      box-shadow: 0 0 30px rgba(0,166,251,0.5);
+    }
+    /* Footer */
+    footer {
+      text-align:center; padding:2rem 1rem;
+      background: rgba(10,14,26,0.9);
+      font-size:0.9rem;
+      border-top: 1px solid rgba(0,166,251,0.1);
+      color: var(--text-dim);
+    }
+    /* Responsive */
+    @media(max-width:768px) {
+      .hero h1 { font-size:2.5rem; }
+      .cards { grid-template-columns: 1fr; }
+    }
+    @media(max-width:600px) {
+      nav ul { display: none; }
+      .mobile-nav { display: block; }
+      .hero h1 { font-size:2rem; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Dynamic Background Canvas -->
+  <canvas id="bg-canvas"></canvas>
+  
+  <!-- Header / Nav -->
+  <header>
+    <div class="logo">vega systematic</div>
+    <nav>
+      <!-- Mobile: native dropdown -->
+      <select class="mobile-nav" onchange="if(this.value) location.href=this.value">
+        <option value="">Navigate…</option>
+        <option value="#home">Home</option>
+        <option value="#about">About</option>
+        <option value="#services">Services</option>
+        <option value="#contact">Contact</option>
+      </select>
+      <!-- Desktop: normal links -->
+      <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+  
+  <!-- Hero -->
+  <section class="hero" id="home">
+    <h1>Advanced Optimization for DeFi</h1>
+    <p>vega systematic specializes in white-label software solutions and proprietary trading strategies, leveraging advanced optimization and robust control theory for decentralized finance and trading infrastructure.</p>
+    <a href="#contact" class="cta">Get in Touch</a>
+  </section>
+  
+  <!-- About -->
+  <section id="about">
+    <h2>About vega systematic</h2>
+    <p>vega systematic is a quantitative technology firm specializing in two core areas: developing white-label software solutions for institutional clients and executing proprietary trading strategies. Our team of PhD researchers and engineers leverage advanced mathematical optimization and robust control theory to build production-ready systems for DeFi protocols and trading infrastructure. We transform complex mathematical frameworks into practical solutions that deliver measurable alpha and operational efficiency in crypto markets.</p>
+  </section>
+  
+  <!-- Services -->
+  <section id="services">
+    <h2>Our Services</h2>
+    <div class="cards">
+      <div class="card">
+        <h3>White-Label Software Solutions</h3>
+        <p>We develop custom DeFi protocols and trading infrastructure for institutional clients. Our solutions include automated market makers, lending protocols, execution algorithms, and risk management systems—all built on rigorous mathematical foundations with production-grade reliability.</p>
+        <p style="margin-top: 1rem;">Our white-label products feature advanced optimization engines, robust control mechanisms, and seamless integration with existing systems, delivering institutional-grade performance with mathematical guarantees.</p>
+      </div>
+      <div class="card">
+        <h3>Proprietary Trading</h3>
+        <p>We deploy capital using research-driven optimization strategies across centralized and decentralized venues. Our trading systems leverage advanced mathematical models to identify and capture alpha in volatile crypto markets.</p>
+        <p style="margin-top: 1rem;">Our strategies include cross-venue arbitrage, optimal execution, dynamic hedging, and liquidity provision—all powered by robust optimization frameworks that adapt to changing market conditions.</p>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Contact -->
+  <section id="contact">
+    <h2>Contact Us</h2>
+    <p style="text-align: center; margin-bottom: 2rem;">Interested in our white-label solutions or partnership opportunities? Send us an enquiry below.</p>
+    
+    <div class="contact-form">
+      <form action="https://formsubmit.co/vegasystematic@gmail.com" method="POST">
+        <!-- FormSubmit configuration -->
+        <input type="hidden" name="_subject" value="New enquiry from vega systematic website">
+        <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_template" value="table">
+        
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="company">Company (Optional)</label>
+          <input type="text" id="company" name="company">
+        </div>
+        
+        <div class="form-group">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" required placeholder="Tell us about your project or requirements..."></textarea>
+        </div>
+        
+        <button type="submit" class="submit-btn">Send Enquiry</button>
+      </form>
+    </div>
+  </section>
+  
+  <!-- Footer -->
+  <footer>
+    &copy; 2024 vega systematic • Optimization for the Decentralized Future
+  </footer>
+  
+  <!-- Complete Dynamic Background Animation Script -->
+  <script>
+    const canvas = document.getElementById('bg-canvas');
+    const ctx = canvas.getContext('2d');
+    
+    // Set canvas size
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+    
+    // Shape class for floating geometric shapes
+    class FloatingShape {
+      constructor() {
+        this.reset();
+      }
+      
+      reset() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.size = Math.random() * 100 + 40;
+        this.speedX = (Math.random() - 0.5) * 0.5;
+        this.speedY = (Math.random() - 0.5) * 0.5;
+        this.rotation = Math.random() * Math.PI * 2;
+        this.rotationSpeed = (Math.random() - 0.5) * 0.02;
+        this.type = Math.floor(Math.random() * 4); // 0: hexagon, 1: triangle, 2: square, 3: circle
+        this.opacity = Math.random() * 0.3 + 0.1;
+        this.pulsePhase = Math.random() * Math.PI * 2;
+        this.color = ['#00a6fb', '#5eb3f6', '#7dd3fc'][Math.floor(Math.random() * 3)];
+      }
+      
+      update() {
+        // Move shape
+        this.x += this.speedX;
+        this.y += this.speedY;
+        this.rotation += this.rotationSpeed;
+        this.pulsePhase += 0.02;
+        
+        // Wrap around screen edges
+        if (this.x < -this.size) this.x = canvas.width + this.size;
+        if (this.x > canvas.width + this.size) this.x = -this.size;
+        if (this.y < -this.size) this.y = canvas.height + this.size;
+        if (this.y > canvas.height + this.size) this.y = -this.size;
+      }
+      
+      draw() {
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.rotate(this.rotation);
+        
+        // Pulsing effect
+        const scale = 1 + Math.sin(this.pulsePhase) * 0.1;
+        ctx.scale(scale, scale);
+        
+        ctx.globalAlpha = this.opacity;
+        ctx.strokeStyle = this.color;
+        ctx.lineWidth = 2;
+        
+        switch(this.type) {
+          case 0: // Hexagon
+            ctx.beginPath();
+            for (let i = 0; i < 6; i++) {
+              const angle = (Math.PI / 3) * i;
+              const x = Math.cos(angle) * this.size;
+              const y = Math.sin(angle) * this.size;
+              if (i === 0) ctx.moveTo(x, y);
+              else ctx.lineTo(x, y);
+            }
+            ctx.closePath();
+            ctx.stroke();
+            break;
+            
+          case 1: // Triangle
+            ctx.beginPath();
+            ctx.moveTo(0, -this.size);
+            ctx.lineTo(-this.size * 0.866, this.size * 0.5);
+            ctx.lineTo(this.size * 0.866, this.size * 0.5);
+            ctx.closePath();
+            ctx.stroke();
+            break;
+            
+          case 2: // Square
+            ctx.strokeRect(-this.size/2, -this.size/2, this.size, this.size);
+            break;
+            
+          case 3: // Circle
+            ctx.beginPath();
+            ctx.arc(0, 0, this.size/2, 0, Math.PI * 2);
+            ctx.stroke();
+            break;
+        }
+        
+        ctx.restore();
+      }
+    }
+    
+    // Particle class for small dots
+    class Particle {
+      constructor() {
+        this.reset();
+      }
+      
+      reset() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.vx = (Math.random() - 0.5) * 0.3;
+        this.vy = (Math.random() - 0.5) * 0.3;
+        this.radius = Math.random() * 2 + 0.5;
+        this.opacity = Math.random() * 0.5 + 0.2;
+      }
+      
+      update() {
+        this.x += this.vx;
+        this.y += this.vy;
+        
+        // Bounce off edges
+        if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+        if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+      }
+      
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(125, 211, 252, ${this.opacity})`;
+        ctx.fill();
+      }
+    }
+    
+    // Create shapes and particles
+    const shapes = [];
+    const particles = [];
+    
+    // Create 8-12 floating shapes
+    for (let i = 0; i < 10; i++) {
+      shapes.push(new FloatingShape());
+    }
+    
+    // Create 30 particles
+    for (let i = 0; i < 30; i++) {
+      particles.push(new Particle());
+    }
+    
+    // Draw connecting lines between nearby particles
+    function drawConnections() {
+      const maxDistance = 150;
+      
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+          
+          if (distance < maxDistance) {
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.strokeStyle = `rgba(94, 179, 246, ${0.1 * (1 - distance / maxDistance)})`;
+            ctx.lineWidth = 0.5;
+            ctx.stroke();
+          }
+        }
+      }
+    }
+    
+    // Animation loop
+    function animate() {
+      // Clear canvas with gradient background
+      ctx.fillStyle = '#0a0e1a';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      
+      // Create gradient overlay
+      const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+      gradient.addColorStop(0, 'rgba(10, 14, 26, 0)');
+      gradient.addColorStop(0.5, 'rgba(13, 25, 41, 0.3)');
+      gradient.addColorStop(1, 'rgba(0, 26, 51, 0.5)');
+      ctx.fillStyle = gradient;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      
+      // Update and draw shapes
+      shapes.forEach(shape => {
+        shape.update();
+        shape.draw();
+      });
+      
+      // Update and draw particles
+      particles.forEach(particle => {
+        particle.update();
+        particle.draw();
+      });
+      
+      // Draw connections
+      drawConnections();
+      
+      // Add subtle glow effect to center
+      const centerGradient = ctx.createRadialGradient(
+        canvas.width / 2, canvas.height / 2, 0,
+        canvas.width / 2, canvas.height / 2, canvas.width / 2
+      );
+      centerGradient.addColorStop(0, 'rgba(0, 166, 251, 0.02)');
+      centerGradient.addColorStop(1, 'rgba(0, 166, 251, 0)');
+      ctx.fillStyle = centerGradient;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      
+      requestAnimationFrame(animate);
+    }
+    
+    // Start animation
+    animate();
+  </script>
+</body>
+</html>
